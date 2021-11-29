@@ -11,5 +11,13 @@ namespace SonarTest.Tests
             
             Assert.Equal(2, result);
         }
+
+        [Fact]
+        public void Subtract_WhenCalled_ReturnsSubtractionOfInput()
+        {
+            var result = Calculator.Subtract(2, 1);
+            
+            Assert.Equal(1, result);
+        }
     }
 }
