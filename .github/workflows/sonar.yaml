@@ -17,13 +17,13 @@ jobs:
         run: dotnet tool install --global dotnet-sonarscanner
         
       - name: Begin sonarscanner
-        run: dotnet sonarscanner begin /k:"PhilBroderickFS_Sonar-Test" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /o:"philbroderickfs" /d:sonar.cs.opencover.reportsPath=TestResults/*/coverage.opencover.xml /d:sonar.cs.vstest.reportsPath=TestResults/*.trx /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.verbose=true"
+        run: dotnet sonarscanner begin /k:"PhilBroderickFS_Sonar-Test" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /o:"philbroderickfs" /d:sonar.cs.opencover.reportsPath=**/coverage.opencover.xml /d:sonar.cs.vstest.reportsPath=**/*.trx /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.verbose=true"
         
       - name: dotnet build
         run: dotnet build
         
       - name: dotnet test
-        run: dotnet test --settings coverlet.runsettings --logger:trx
+        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
         
       - name: end sonarscanner
         run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
