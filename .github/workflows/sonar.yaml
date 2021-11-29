@@ -17,7 +17,7 @@ jobs:
         run: dotnet tool install --global dotnet-sonarscanner
         
       - name: Begin sonarscanner
-        run: dotnet sonarscanner begin /k:"PhilBroderickFS_Sonar-Test" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /o:"philbroderickfs" /d:"sonar.cs.opencover.reportsPath=TestResults/*/coverage.opencover.xml" /d:"sonar.cs.vstest.reportsPath=TestResults/*.trx" /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.verbose=true"
+        run: dotnet sonarscanner begin /k:"PhilBroderickFS_Sonar-Test" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /o:"philbroderickfs" /d:sonar.cs.opencover.reportsPath=TestResults/*/coverage.opencover.xml /d:sonar.cs.vstest.reportsPath=TestResults/*.trx /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.verbose=true"
         
       - name: dotnet build
         run: dotnet build
