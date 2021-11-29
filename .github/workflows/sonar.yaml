@@ -36,14 +36,6 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-          
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0.x'
-
-      - name: dotnet test
-        run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" -r ./TestResults
         
       - name: Build and analyze
         env:
@@ -51,6 +43,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"PhilBroderickFS_Sonar-Test" /o:"philbroderickfs" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:propertyKey="./TestResults"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"PhilBroderickFS_Sonar-Test" /o:"philbroderickfs" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPath="./TestResults"
           dotnet build
+          dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" -r ./TestResults
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
