@@ -24,11 +24,11 @@ namespace SonarTest.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> Get(int num)
         {
             _logger.LogInformation("Getting weather forecast");
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, num).Select(index => new WeatherForecast
                 {
                     Date = DateTime.Now.AddDays(Calculator.Multiply(index, 1)),
                     TemperatureC = rng.Next(-20, 55),
